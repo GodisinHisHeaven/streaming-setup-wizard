@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>三美元看片 · 交互式引导</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>三美元看片 · 一站式设置向导</h1>
+      <p>目标：10-15 分钟完成从 0 到可播放。</p>
+      <div id="progressText"></div>
+      <div class="progress"><div id="progressBar"></div></div>
+    </header>
+
+    <section id="stepCard" class="card"></section>
+
+    <footer class="actions">
+      <button id="prevBtn">上一步</button>
+      <button id="nextBtn">下一步</button>
+    </footer>
+  </main>
+
+  <script src="./wizard.js"></script>
+</body>
+</html>
