@@ -159,7 +159,7 @@ function bindInputs() {
   ids.forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
-    const eventName = el.tagName === 'INPUT' && el.type === 'text' ? 'input' : 'change';
+    const eventName = el.tagName === 'INPUT' && el.type !== 'checkbox' ? 'input' : 'change';
     el.addEventListener(eventName, () => {
       state.data[id] = el.type === 'checkbox' ? el.checked : el.value;
       persistState();
@@ -206,6 +206,18 @@ function render() {
   document.getElementById('progressBar').style.width = `${((state.step + 1) / steps.length) * 100}%`;
   document.getElementById('prevBtn').disabled = state.step === 0;
   document.getElementById('nextBtn').textContent = state.step === steps.length - 1 ? '完成' : '下一步';
+
+  const stepList = document.getElementById('stepList');
+  if (stepList) {
+    stepList.innerHTML = steps.map((s, i) => {
+      const cls = i === state.step ? 'active' : '';
+      return `<li class="${cls}">${s.title.replace(/^Step\s\d+\s·\s/, '')}</li>`;
+    }).join('');
+  }
+
+  const hint = document.getElementById('errorHint');
+  if (hint) hint.textContent = '';
+
   bindInputs();
 }
 
@@ -219,14 +231,21 @@ document.getElementById('prevBtn').addEventListener('click', () => {
 
 document.getElementById('nextBtn').addEventListener('click', () => {
   const stepDef = steps[state.step];
+  const hint = document.getElementById('errorHint');
   if (!stepDef.valid()) {
-    alert(stepDef.invalidHint || '请先完成当前步骤。');
+    if (hint) {
+      hint.textContent = stepDef.invalidHint || '请先完成当前步骤。';
+      hint.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
     return;
   }
+  if (hint) hint.textContent = '';
+
   if (state.step < steps.length - 1) {
     state.step++;
     persistState();
     render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 });
 

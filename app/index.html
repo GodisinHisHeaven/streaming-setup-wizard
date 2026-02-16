@@ -8,19 +8,29 @@
 </head>
 <body>
   <main class="container">
-    <header>
-      <h1>三美元看片 · 一站式设置向导</h1>
-      <p>目标：10-15 分钟完成从 0 到可播放。</p>
-      <div id="progressText"></div>
-      <div class="progress"><div id="progressBar"></div></div>
-    </header>
+    <aside class="sidebar card">
+      <h1>三美元看片向导</h1>
+      <p class="subtitle">10-15 分钟完成从 0 到可播放</p>
+      <div id="progressText" class="progress-text"></div>
+      <div class="progress" aria-label="设置进度"><div id="progressBar"></div></div>
+      <ol id="stepList" class="step-list"></ol>
+    </aside>
 
-    <section id="stepCard" class="card"></section>
+    <section class="main-panel">
+      <header class="main-header">
+        <div class="badge">交互式设置</div>
+        <p class="small">提示：每一步填完会自动保存进度（默认不保存 Token）。</p>
+      </header>
 
-    <footer class="actions">
-      <button id="prevBtn">上一步</button>
-      <button id="nextBtn">下一步</button>
-    </footer>
+      <section id="stepCard" class="card step-card"></section>
+
+      <div id="errorHint" class="error-hint" role="alert" aria-live="polite"></div>
+
+      <footer class="actions">
+        <button id="prevBtn">上一步</button>
+        <button id="nextBtn" class="primary">下一步</button>
+      </footer>
+    </section>
   </main>
 
   <script src="./wizard.js"></script>
